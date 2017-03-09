@@ -1,7 +1,7 @@
 import random
 import string
 
-
+# create a shortcode generator (any string or digit, 8 character)
 def shortcode_generator(size = 8, chars = string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for i in range(size))
 

@@ -3,7 +3,13 @@ import datetime
 from .utils import shortcode_generator, create_shortcode
 # Create your models here.
 
-# create a shortcode generator (any string or digit, 8 character)
+
+
+class BenURLManager(models.Manager):
+    def all(self, *args, **keyword_args):
+        query_set = super(BenURLManager, self).all(*args, **keyword_args)
+        query_set = query_set.filter(active = True)
+        return query_set
 
 class BenURL(models.Model):
     url = models.CharField(max_length=200, )
@@ -13,6 +19,11 @@ class BenURL(models.Model):
     created_datetime = models.DateTimeField(auto_now = True)
     # when was the model created
     update_timestamp = models.DateTimeField(auto_now_add = True)
+    # show if an element active
+    active = models.BooleanField(default = True)
+
+    # refresh how many element is active
+    objects = BenURLManager()
 
     def save(self, *args, **keyword_args):
         # create shortcode if the url doesnt have it
