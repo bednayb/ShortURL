@@ -11,6 +11,25 @@ class BenURLManager(models.Manager):
         query_set = query_set.filter(active = True)
         return query_set
 
+    def refresh_shortcodes(self, items=None):
+        # where the ID is =or bigger than 1
+        query_set = BenURL.objects.filter(id__gte = 1)
+        # if items is not None and isinstance(items, int):
+        #     qs = qs.order_by('id') [:items]
+        if items is not None and isinstance(items, int):
+            query_set = query_set.order_by('id')[:items]
+        new_codes = 0
+        # make new shortcode
+        for q in query_set:
+            q.shortcode = create_shortcode(q)
+            print(q.id)
+            print(q.url)
+            print(q.shortcode)
+            q.save()
+            new_codes += 1
+        return "New codes made {i}".format(i=new_codes)
+
+
 class BenURL(models.Model):
     url = models.CharField(max_length=200, )
     # every shortcode should be unique
