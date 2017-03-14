@@ -21,9 +21,9 @@ from shortener.views import Ben_redirect_view, BenClassBasedView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # everthing in localhost:8000/a
-    url(r'a/(?P<shortcode>[\w-]+)/$', Ben_redirect_view),
-    # everthing in localhost:8000/b
-    url(r'b/(?P<shortcode>[\w-]+)/$', BenClassBasedView.as_view()),
+    # everthing in localhost:8000/a and characters between 8 and 15
+    url(r'a/(?P<shortcode>[\w-]+){8,15}$', Ben_redirect_view),
+    # everthing in localhost:8000/b and characters between 8 and 15
+    url(r'b/(?P<shortcode>[\w-]+){8,15}$', BenClassBasedView.as_view()),
     # url(r'^abc/$', 'shortener.views.Ben_redirect_view'),
 ]
