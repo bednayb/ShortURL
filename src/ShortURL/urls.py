@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from shortener.views import Ben_redirect_view, BenClassBasedView
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^view-1/$', Ben_redirect_view),
+    url(r'^view-2/$', BenClassBasedView.as_view()),
 ]
