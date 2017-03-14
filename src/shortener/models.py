@@ -1,9 +1,10 @@
+from django.conf import settings
 from django.db import models
 import datetime
 from .utils import shortcode_generator, create_shortcode
 # Create your models here.
 
-
+SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 15)
 
 class BenURLManager(models.Manager):
     def all(self, *args, **keyword_args):
@@ -17,6 +18,7 @@ class BenURLManager(models.Manager):
         # if items is not None and isinstance(items, int):
         #     qs = qs.order_by('id') [:items]
         if items is not None and isinstance(items, int):
+        # with -id decrease order by id
             query_set = query_set.order_by('id')[:items]
         new_codes = 0
         # make new shortcode
@@ -33,7 +35,7 @@ class BenURLManager(models.Manager):
 class BenURL(models.Model):
     url = models.CharField(max_length=200, )
     # every shortcode should be unique
-    shortcode = models.CharField(max_length=15, unique=True, blank= True)
+    shortcode = models.CharField(max_length=SHORTCODE_MAX, unique=True, blank= True)
     #  when was the model modified last time
     created_datetime = models.DateTimeField(auto_now = True)
     # when was the model created
