@@ -18,8 +18,12 @@ from django.contrib import admin
 
 from shortener.views import Ben_redirect_view, BenClassBasedView
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^view-1/$', Ben_redirect_view),
-    url(r'^view-2/$', BenClassBasedView.as_view()),
+    # everthing in localhost:8000/a
+    url(r'a/(?P<shortcode>[\w-]+)/$', Ben_redirect_view),
+    # everthing in localhost:8000/b
+    url(r'b/(?P<shortcode>[\w-]+)/$', BenClassBasedView.as_view()),
+    # url(r'^abc/$', 'shortener.views.Ben_redirect_view'),
 ]
